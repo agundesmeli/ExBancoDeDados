@@ -1,0 +1,32 @@
+
+SELECT s.title, g.name
+FROM series s
+INNER JOIN genres g on s.genre_id = g.id;
+
+
+SELECT e.title, a.first_name, a.last_name
+FROM episodes e, actor_episode ae, actors a
+WHERE e.id = ae.episode_id
+AND a.id = ae.actor_id;
+
+
+SELECT s.title, COUNT(ss.id) as numeroTotalDeTemposradas
+FROM series s, seasons ss
+WHERE s.id = ss.serie_id
+GROUP BY s.id;
+
+
+SELECT g.name, COUNT(m.id) as numeroTotalDeFilmes
+FROM genres g, movies m
+WHERE g.id = m.genre_id
+GROUP BY g.name
+HAVING numeroTotalDeFilmes >= 3;
+
+
+SELECT DISTINCT a.first_name, a.last_name
+FROM actors a, movies m, actor_movie am 
+WHERE am.actor_id = a.id 
+AND am.movie_id = m.id
+AND m.title LIKE 'La Guerra de las galaxias%'
+GROUP BY a.first_name, a.last_name
+HAVING COUNT(m.title) = (SELECT COUNT(*) FROM movies WHERE title LIKE 'La Guerra de las galaxias%');

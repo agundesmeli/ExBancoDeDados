@@ -1,0 +1,43 @@
+
+
+INSERT INTO movies(title, rating, awards, release_date, length, genre_id) VALUES("Interestelar", 8.9, 6, "2015-07-11 00:00:00", 120, 5);
+
+
+INSERT INTO genres(name, ranking, active)
+VALUES("Romance", 13, 1);
+
+
+UPDATE movies m
+SET genre_id = 13
+WHERE m.title = "Interestelar";
+
+
+UPDATE actors a 
+SET favorite_movie_id = 22
+WHERE a.id = 3;
+
+
+CREATE TEMPORARY TABLE moviest (SELECT * FROM movies);
+
+
+DELETE FROM moviest
+WHERE awards < 5;
+
+
+SELECT g.name 
+FROM genres g, movies m
+WHERE g.id = m.genre_id
+GROUP BY g.name;
+
+
+SELECT a.first_name, a.last_name
+FROM actors a
+INNER JOIN movies m ON a.favorite_movie_id = m.id
+WHERE m.awards > 3
+GROUP BY a.first_name, a.last_name;
+
+
+EXPLAIN DELETE FROM moviest WHERE awards < 5;
+
+
+CREATE INDEX idx_movies_temp ON moviest(id);
